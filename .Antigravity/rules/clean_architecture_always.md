@@ -157,3 +157,58 @@ void reducer({required HomeAction action}) {
 Todas las rutas de imágenes deben centralizarse en la clase `AppImages` dentro del archivo: lib/config/theme/app_images.dart
 
 
+### Manejo de Traducciones
+
+- Archivos en `assets/translations/`
+  - en-EN.json
+  - es-ES.json
+- Uso: `'key'.tr()`
+
+
+## 🔐 Seguridad
+
+- Almacenamiento seguro de tokens mediante Flutter Secure Storage
+- Encriptación de SharedPreferences en Android
+- Configuración de KeychainAccessibility en iOS
+
+## 🎨 Theming
+
+El proyecto utiliza Material 3 con temas personalizados:
+Todo el sistema de diseño visual está centralizado en la carpeta: 
+lib/config/theme/
+├── app_dimens.dart          # Espaciados
+├── app_images.dart          # Rutas de assets
+├── color_schema.dart        # Esquema de colores principal
+├── color_extension.dart     # Extensiones de Color
+├── text_theme.dart          # Tipografías
+├── text_extension.dart      # Extensiones de estilo de texto
+├── theme_data.dart          # ThemeData unificada
+├── theme_extension.dart     # Extensiones para personalización global
+
+### ✅ Reglas de uso
+
+- Los widgets y pantallas **deben adherirse al sistema de theme** definido.
+- ❌ No se permite el uso de colores o estilos hardcodeados.
+- Usar:
+  - `ColorScheme` personalizada (`color_schema.dart`)
+  - `TextTheme` personalizada (`text_theme.dart`)
+  - Extensiones (`color_extension.dart`, `text_extension.dart`) para estandarizar estilos
+
+## 🌐 Internacionalización
+
+- Todos los textos deben almacenarse en los archivos de traducción:
+  - `assets/translations/en-EN.json`
+  - `assets/translations/es-ES.json`
+
+- Usar `.tr()` para acceder a los textos.
+- No escribir strings literales directamente en los widgets.
+- Seguir estructura jerárquica en los archivos JSON. Ejemplo:
+
+```json
+{
+  "login": {
+    "title": "Iniciar Sesión",
+    "email": "Correo Electrónico",
+    "password": "Contraseña"
+  }
+}

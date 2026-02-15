@@ -1,9 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-abstract class BaseStateNotifier<T> extends StateNotifier<T> {
-  BaseStateNotifier(super.state);
+abstract class BaseStateNotifier<S, A> extends StateNotifier<S> {
+  final Ref ref;
 
-  void setLoading();
-  void setError(String message);
-  void setSuccess(T data);
+  BaseStateNotifier({
+    required S state,
+    required this.ref,
+  }) : super(state);
+
+  void reducer({required A action});
 }
