@@ -1,0 +1,234 @@
+{
+    "message": "Onboarding initialized successfully",
+    "status": "success",
+    "userDetails": {
+        "userId": "6922ef50982febb70478481d",
+        "leadInfoId": "6922ef50982febb704784822",
+        "systemLanguage": "en"
+    },
+    "onboardingFlow": {
+        "defaults": {
+            "ctaText": {
+                "en": "Continue",
+                "es": "Continuar",
+                "pt": "Continuar",
+                "ko": "계속하기",
+                "ar": "استمر",
+                "he": "המשך",
+                "de": "Weiter",
+                "fr": "Continuer",
+                "it": "Continua",
+                "ru": "Продолжить",
+                "vi": "Tiếp tục",
+                "az": "Davam et"
+            },
+            "skipText": {
+                "en": "SKIP",
+                "es": "OMITIR",
+                "pt": "PULAR",
+                "ko": "건너뛰기",
+                "ar": "تخطي",
+                "he": "דלג",
+                "de": "ÜBERSPRINGEN",
+                "fr": "PASSER",
+                "it": "SALTA",
+                "ru": "ПРОПУСТИТЬ",
+                "vi": "BỎ QUA",
+                "az": "KEÇ"
+            }
+        },
+        "levelConfig": {
+            "wordsThreshold": {
+                "A": 10,
+                "B": 10,
+                "C": 10
+            },
+            "levelThreshold": 0.5
+        },
+        "_id": "68b05f0d647d6dfc23d3fdcf",
+        "steps": [
+            {
+                "_id": "68b05efb647d6dfc23d3fbc1",
+                "stepIndex": 7,
+                "trackingOrder": 8,
+                "stepType": "question",
+                "componentType": "list",
+                "optionsSourceType": "static",
+                "questionTopic": "englishLevel",
+                "skippable": false,
+                "assets": {
+                    "image1": "https://s3.us-east-2.amazonaws.com/assets.singit.io/onboardingFlow/figures/bmFigure.svg"
+                },
+                "content": {
+                    "en": {
+                        "text1": "What is your English level?"
+                    },
+                    "es": {
+                        "text1": "¿Cuál es tu nivel de inglés?"
+                    }
+                },
+                "selectionLimit": 1,
+                "options": [
+                    {
+                        "_id": "68b05efb647d6dfc23d3fbf5",
+                        "stepId": "68b05efb647d6dfc23d3fbc1",
+                        "value": "totalBeginner",
+                        "imgUrl": "https://s3.us-east-2.amazonaws.com/assets.singit.io/onboardingFlow/misc/signal0.svg",
+                        "translations": {
+                            "en": "I'm a total beginner",
+                            "es": "Soy un principiante total"
+                        }
+                    },
+                    {
+                        "_id": "68b05efb647d6dfc23d3fbf6",
+                        "stepId": "68b05efb647d6dfc23d3fbc1",
+                        "value": "simpleSentences",
+                        "imgUrl": "https://s3.us-east-2.amazonaws.com/assets.singit.io/onboardingFlow/misc/signal1.svg",
+                        "translations": {
+                            "en": "I understand simple sentences",
+                            "es": "Entiendo frases sencillas"
+                        }
+                    },
+                    {
+                        "_id": "68b05efb647d6dfc23d3fbf7",
+                        "stepId": "68b05efb647d6dfc23d3fbc1",
+                        "value": "simpleConversations",
+                        "imgUrl": "https://s3.us-east-2.amazonaws.com/assets.singit.io/onboardingFlow/misc/signal2.svg",
+                        "translations": {
+                            "en": "I can have simple conversations",
+                            "es": "Puedo tener conversaciones sencillas"
+                        }
+                    },
+                    {
+                        "_id": "68b05efb647d6dfc23d3fbf8",
+                        "stepId": "68b05efb647d6dfc23d3fbc1",
+                        "value": "speakWithConfidence",
+                        "imgUrl": "https://s3.us-east-2.amazonaws.com/assets.singit.io/onboardingFlow/misc/signal3.svg",
+                        "translations": {
+                            "en": "I speak with confidence",
+                            "es": "Hablo con confianza"
+                        }
+                    }
+                ],
+                "nextSteps": [
+                    {
+                        "conditions": [
+                            {
+                                "stepId": "68b05efb647d6dfc23d3fbc1",
+                                "optionId": "68b05efb647d6dfc23d3fbf5",
+                                "_id": "68b05efe647d6dfc23d3fce7"
+                            }
+                        ],
+                        "nextStepId": "68b05efb647d6dfc23d3fbc2"
+                    },
+                    {
+                        "conditions": [
+                            {
+                                "stepId": "68b05efb647d6dfc23d3fbc1",
+                                "optionId": "68b05efb647d6dfc23d3fbf6",
+                                "_id": "68b05efe647d6dfc23d3fce9"
+                            }
+                        ],
+                        "nextStepId": "68b05efb647d6dfc23d3fbc3"
+                    },
+                    {
+                        "conditions": [
+                            {
+                                "stepId": "68b05efb647d6dfc23d3fbc1",
+                                "optionId": "68b05efb647d6dfc23d3fbf7",
+                                "_id": "68b05efe647d6dfc23d3fceb"
+                            }
+                        ],
+                        "nextStepId": "68b05efb647d6dfc23d3fbc4"
+                    },
+                    {
+                        "conditions": [
+                            {
+                                "stepId": "68b05efb647d6dfc23d3fbc1",
+                                "optionId": "68b05efb647d6dfc23d3fbf8",
+                                "_id": "68b05efe647d6dfc23d3fced"
+                            }
+                        ],
+                        "nextStepId": "68b05efb647d6dfc23d3fbc5"
+                    }
+                ]
+            },
+            {
+                "_id": "68b05efb647d6dfc23d3fbc2",
+                "stepIndex": 8,
+                "stepType": "transition",
+                "componentType": "englishJourney",
+                "content": {
+                    "en": {
+                        "text1": "Beginner",
+                        "text2": "You're just *getting started,* and that's exciting! We'll guide you step by step and introduce English through simple, fun songs.",
+                        "text3": "English journey",
+                        "text4": "LEARN FIRST 5 WORDS",
+                        "text5": "HAVE SIMPLE CONVERSATIONS",
+                        "text6": "PROFICIENCY",
+                        "text7": "Now",
+                        "text8": "27 days"
+                    },
+                    "es": {
+                        "text1": "Principiante",
+                        "text2": "¡Estás apenas *comenzando*, y eso es emocionante! Te guiaremos paso a paso y te presentaremos el inglés a través de canciones sencillas y divertidas.",
+                        "text3": "Viaje de inglés",
+                        "text4": "APRENDER LAS PRIMERAS 5 PALABRAS",
+                        "text5": "TENER CONVERSACIONES SENCILLAS",
+                        "text6": "HABILIDAD",
+                        "text7": "Ahora",
+                        "text8": "27 días"
+                    }
+                },
+                "assets": {
+                    "image1": "https://s3.us-east-2.amazonaws.com/assets.singit.io/onboardingFlow/graphs/englishJourney.svg"
+                }
+            },
+            {
+                "_id": "68b05efb647d6dfc23d3fbc3",
+                "stepIndex": 8,
+                "stepType": "transition",
+                "componentType": "englishJourney",
+                "content": {
+                    "en": {
+                        "text1": "Elementary",
+                        "text2": "You know some *basic English,* great start! Let's build your confidence with songs that strengthen everyday vocabulary and phrases."
+                    }
+                },
+                "assets": {
+                    "image1": "https://s3.us-east-2.amazonaws.com/assets.singit.io/onboardingFlow/graphs/englishJourney.svg"
+                }
+            },
+            {
+                "_id": "68b05efb647d6dfc23d3fbc4",
+                "stepIndex": 8,
+                "stepType": "transition",
+                "componentType": "englishJourney",
+                "content": {
+                    "en": {
+                        "text1": "Intermediate",
+                        "text2": "You're on your way! You understand much of what you *hear and read.* Now, let's use music to boost your fluency and expression."
+                    }
+                },
+                "assets": {
+                    "image1": "https://s3.us-east-2.amazonaws.com/assets.singit.io/onboardingFlow/graphs/englishJourney.svg"
+                }
+            },
+            {
+                "_id": "68b05efb647d6dfc23d3fbc5",
+                "stepIndex": 8,
+                "stepType": "transition",
+                "componentType": "englishJourney",
+                "content": {
+                    "en": {
+                        "text1": "Advanced",
+                        "text2": "You've got *strong English skills.* With music, we'll help you fine-tune your vocabulary, catch natural expressions, and sound more fluent than ever."
+                    }
+                },
+                "assets": {
+                    "image1": "https://s3.us-east-2.amazonaws.com/assets.singit.io/onboardingFlow/graphs/englishJourney.svg"
+                }
+            }
+        ]
+    }
+}
