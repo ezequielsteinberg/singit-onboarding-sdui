@@ -1,0 +1,9 @@
+{
+    "onboarding": {
+        "continue": "Continuar",
+        "skip": "Saltar"
+    },
+    "title": "Singit Onboarding",
+    "loading": "Cargando...",
+    "error": "Error: {}"
+}
