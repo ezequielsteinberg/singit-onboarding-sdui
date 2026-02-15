@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'english_journey_model.dart';
 import 'english_journey_graph_painters.dart';
 
@@ -202,14 +203,14 @@ class GraphTooltip extends StatelessWidget {
     return CustomPaint(
       painter: TooltipPainter(),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         constraints: const BoxConstraints(maxWidth: 120),
         child: Text(
           text,
-          style: const TextStyle(
+          style: GoogleFonts.nunito(
             fontSize: 10,
-            fontWeight: FontWeight.bold,
-            color: Colors.grey,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xFF999999),
           ),
           textAlign: TextAlign.center,
         ),
@@ -226,14 +227,14 @@ class TooltipPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     final shadowPaint = Paint()
-      ..color = Colors.black.withOpacity(0.1)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
+      ..color = Colors.black.withOpacity(0.08)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
 
     final path = Path();
 
-    const radius = 8.0;
-    const tailWidth = 8.0;
-    const tailHeight = 6.0;
+    const radius = 4.0;
+    const tailWidth = 6.0;
+    const tailHeight = 4.0;
 
     // Start from top-left, going clockwise
     path.moveTo(radius, 0);
@@ -271,13 +272,6 @@ class TooltipPainter extends CustomPainter {
 
     // Draw tooltip
     canvas.drawPath(path, paint);
-
-    // Draw border
-    final borderPaint = Paint()
-      ..color = Colors.grey.shade200
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1;
-    canvas.drawPath(path, borderPaint);
   }
 
   @override
