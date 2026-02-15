@@ -72,7 +72,7 @@ class OnboardingStepDto {
 
   factory OnboardingStepDto.fromJson(Map<String, dynamic> json) {
     return OnboardingStepDto(
-      id: json['_id'] as String, // Fix: Map _id to id
+      id: json['_id'] as String,
       stepIndex: json['stepIndex'] as int,
       stepType: json['stepType'] as String,
       componentType: json['componentType'] as String,
@@ -118,7 +118,7 @@ class StepOptionDto {
 
   factory StepOptionDto.fromJson(Map<String, dynamic> json) {
     return StepOptionDto(
-      id: json['_id'] as String, // Fix: Map _id to id
+      id: json['_id'] as String,
       value: json['value'] as String,
       imgUrl: json['imgUrl'] as String?,
       translations: json['translations'] as Map<String, dynamic>,

@@ -19,8 +19,8 @@ mixin _$OnboardingState {
   bool get isLoading => throw _privateConstructorUsedError;
   OnboardingFlow? get flow => throw _privateConstructorUsedError;
   OnboardingStep? get currentStep => throw _privateConstructorUsedError;
-  Map<String, String> get answers =>
-      throw _privateConstructorUsedError; // stepId -> optionId
+  Map<String, String> get answers => throw _privateConstructorUsedError;
+  List<OnboardingStep> get history => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -39,6 +39,7 @@ abstract class $OnboardingStateCopyWith<$Res> {
       OnboardingFlow? flow,
       OnboardingStep? currentStep,
       Map<String, String> answers,
+      List<OnboardingStep> history,
       String? error});
 
   $OnboardingFlowCopyWith<$Res>? get flow;
@@ -62,6 +63,7 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
     Object? flow = freezed,
     Object? currentStep = freezed,
     Object? answers = null,
+    Object? history = null,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
@@ -81,6 +83,10 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
           ? _value.answers
           : answers // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
+      history: null == history
+          ? _value.history
+          : history // ignore: cast_nullable_to_non_nullable
+              as List<OnboardingStep>,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -126,6 +132,7 @@ abstract class _$$OnboardingStateImplCopyWith<$Res>
       OnboardingFlow? flow,
       OnboardingStep? currentStep,
       Map<String, String> answers,
+      List<OnboardingStep> history,
       String? error});
 
   @override
@@ -149,6 +156,7 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
     Object? flow = freezed,
     Object? currentStep = freezed,
     Object? answers = null,
+    Object? history = null,
     Object? error = freezed,
   }) {
     return _then(_$OnboardingStateImpl(
@@ -168,6 +176,10 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
           ? _value._answers
           : answers // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
+      history: null == history
+          ? _value._history
+          : history // ignore: cast_nullable_to_non_nullable
+              as List<OnboardingStep>,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -184,8 +196,10 @@ class _$OnboardingStateImpl implements _OnboardingState {
       this.flow,
       this.currentStep,
       final Map<String, String> answers = const {},
+      final List<OnboardingStep> history = const [],
       this.error})
-      : _answers = answers;
+      : _answers = answers,
+        _history = history;
 
   @override
   @JsonKey()
@@ -203,13 +217,21 @@ class _$OnboardingStateImpl implements _OnboardingState {
     return EqualUnmodifiableMapView(_answers);
   }
 
-// stepId -> optionId
+  final List<OnboardingStep> _history;
+  @override
+  @JsonKey()
+  List<OnboardingStep> get history {
+    if (_history is EqualUnmodifiableListView) return _history;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_history);
+  }
+
   @override
   final String? error;
 
   @override
   String toString() {
-    return 'OnboardingState(isLoading: $isLoading, flow: $flow, currentStep: $currentStep, answers: $answers, error: $error)';
+    return 'OnboardingState(isLoading: $isLoading, flow: $flow, currentStep: $currentStep, answers: $answers, history: $history, error: $error)';
   }
 
   @override
@@ -223,12 +245,19 @@ class _$OnboardingStateImpl implements _OnboardingState {
             (identical(other.currentStep, currentStep) ||
                 other.currentStep == currentStep) &&
             const DeepCollectionEquality().equals(other._answers, _answers) &&
+            const DeepCollectionEquality().equals(other._history, _history) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, flow, currentStep,
-      const DeepCollectionEquality().hash(_answers), error);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      flow,
+      currentStep,
+      const DeepCollectionEquality().hash(_answers),
+      const DeepCollectionEquality().hash(_history),
+      error);
 
   @JsonKey(ignore: true)
   @override
@@ -244,6 +273,7 @@ abstract class _OnboardingState implements OnboardingState {
       final OnboardingFlow? flow,
       final OnboardingStep? currentStep,
       final Map<String, String> answers,
+      final List<OnboardingStep> history,
       final String? error}) = _$OnboardingStateImpl;
 
   @override
@@ -254,7 +284,9 @@ abstract class _OnboardingState implements OnboardingState {
   OnboardingStep? get currentStep;
   @override
   Map<String, String> get answers;
-  @override // stepId -> optionId
+  @override
+  List<OnboardingStep> get history;
+  @override
   String? get error;
   @override
   @JsonKey(ignore: true)
@@ -269,6 +301,7 @@ mixin _$OnboardingAction {
     required TResult Function() loadFlow,
     required TResult Function(String stepId, String optionId) selectOption,
     required TResult Function() continueToNextStep,
+    required TResult Function() goBack,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -276,6 +309,7 @@ mixin _$OnboardingAction {
     TResult? Function()? loadFlow,
     TResult? Function(String stepId, String optionId)? selectOption,
     TResult? Function()? continueToNextStep,
+    TResult? Function()? goBack,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -283,6 +317,7 @@ mixin _$OnboardingAction {
     TResult Function()? loadFlow,
     TResult Function(String stepId, String optionId)? selectOption,
     TResult Function()? continueToNextStep,
+    TResult Function()? goBack,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -291,6 +326,7 @@ mixin _$OnboardingAction {
     required TResult Function(_LoadFlow value) loadFlow,
     required TResult Function(_SelectOption value) selectOption,
     required TResult Function(_ContinueToNextStep value) continueToNextStep,
+    required TResult Function(_GoBack value) goBack,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -298,6 +334,7 @@ mixin _$OnboardingAction {
     TResult? Function(_LoadFlow value)? loadFlow,
     TResult? Function(_SelectOption value)? selectOption,
     TResult? Function(_ContinueToNextStep value)? continueToNextStep,
+    TResult? Function(_GoBack value)? goBack,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -305,6 +342,7 @@ mixin _$OnboardingAction {
     TResult Function(_LoadFlow value)? loadFlow,
     TResult Function(_SelectOption value)? selectOption,
     TResult Function(_ContinueToNextStep value)? continueToNextStep,
+    TResult Function(_GoBack value)? goBack,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -369,6 +407,7 @@ class _$LoadFlowImpl implements _LoadFlow {
     required TResult Function() loadFlow,
     required TResult Function(String stepId, String optionId) selectOption,
     required TResult Function() continueToNextStep,
+    required TResult Function() goBack,
   }) {
     return loadFlow();
   }
@@ -379,6 +418,7 @@ class _$LoadFlowImpl implements _LoadFlow {
     TResult? Function()? loadFlow,
     TResult? Function(String stepId, String optionId)? selectOption,
     TResult? Function()? continueToNextStep,
+    TResult? Function()? goBack,
   }) {
     return loadFlow?.call();
   }
@@ -389,6 +429,7 @@ class _$LoadFlowImpl implements _LoadFlow {
     TResult Function()? loadFlow,
     TResult Function(String stepId, String optionId)? selectOption,
     TResult Function()? continueToNextStep,
+    TResult Function()? goBack,
     required TResult orElse(),
   }) {
     if (loadFlow != null) {
@@ -403,6 +444,7 @@ class _$LoadFlowImpl implements _LoadFlow {
     required TResult Function(_LoadFlow value) loadFlow,
     required TResult Function(_SelectOption value) selectOption,
     required TResult Function(_ContinueToNextStep value) continueToNextStep,
+    required TResult Function(_GoBack value) goBack,
   }) {
     return loadFlow(this);
   }
@@ -413,6 +455,7 @@ class _$LoadFlowImpl implements _LoadFlow {
     TResult? Function(_LoadFlow value)? loadFlow,
     TResult? Function(_SelectOption value)? selectOption,
     TResult? Function(_ContinueToNextStep value)? continueToNextStep,
+    TResult? Function(_GoBack value)? goBack,
   }) {
     return loadFlow?.call(this);
   }
@@ -423,6 +466,7 @@ class _$LoadFlowImpl implements _LoadFlow {
     TResult Function(_LoadFlow value)? loadFlow,
     TResult Function(_SelectOption value)? selectOption,
     TResult Function(_ContinueToNextStep value)? continueToNextStep,
+    TResult Function(_GoBack value)? goBack,
     required TResult orElse(),
   }) {
     if (loadFlow != null) {
@@ -512,6 +556,7 @@ class _$SelectOptionImpl implements _SelectOption {
     required TResult Function() loadFlow,
     required TResult Function(String stepId, String optionId) selectOption,
     required TResult Function() continueToNextStep,
+    required TResult Function() goBack,
   }) {
     return selectOption(stepId, optionId);
   }
@@ -522,6 +567,7 @@ class _$SelectOptionImpl implements _SelectOption {
     TResult? Function()? loadFlow,
     TResult? Function(String stepId, String optionId)? selectOption,
     TResult? Function()? continueToNextStep,
+    TResult? Function()? goBack,
   }) {
     return selectOption?.call(stepId, optionId);
   }
@@ -532,6 +578,7 @@ class _$SelectOptionImpl implements _SelectOption {
     TResult Function()? loadFlow,
     TResult Function(String stepId, String optionId)? selectOption,
     TResult Function()? continueToNextStep,
+    TResult Function()? goBack,
     required TResult orElse(),
   }) {
     if (selectOption != null) {
@@ -546,6 +593,7 @@ class _$SelectOptionImpl implements _SelectOption {
     required TResult Function(_LoadFlow value) loadFlow,
     required TResult Function(_SelectOption value) selectOption,
     required TResult Function(_ContinueToNextStep value) continueToNextStep,
+    required TResult Function(_GoBack value) goBack,
   }) {
     return selectOption(this);
   }
@@ -556,6 +604,7 @@ class _$SelectOptionImpl implements _SelectOption {
     TResult? Function(_LoadFlow value)? loadFlow,
     TResult? Function(_SelectOption value)? selectOption,
     TResult? Function(_ContinueToNextStep value)? continueToNextStep,
+    TResult? Function(_GoBack value)? goBack,
   }) {
     return selectOption?.call(this);
   }
@@ -566,6 +615,7 @@ class _$SelectOptionImpl implements _SelectOption {
     TResult Function(_LoadFlow value)? loadFlow,
     TResult Function(_SelectOption value)? selectOption,
     TResult Function(_ContinueToNextStep value)? continueToNextStep,
+    TResult Function(_GoBack value)? goBack,
     required TResult orElse(),
   }) {
     if (selectOption != null) {
@@ -627,6 +677,7 @@ class _$ContinueToNextStepImpl implements _ContinueToNextStep {
     required TResult Function() loadFlow,
     required TResult Function(String stepId, String optionId) selectOption,
     required TResult Function() continueToNextStep,
+    required TResult Function() goBack,
   }) {
     return continueToNextStep();
   }
@@ -637,6 +688,7 @@ class _$ContinueToNextStepImpl implements _ContinueToNextStep {
     TResult? Function()? loadFlow,
     TResult? Function(String stepId, String optionId)? selectOption,
     TResult? Function()? continueToNextStep,
+    TResult? Function()? goBack,
   }) {
     return continueToNextStep?.call();
   }
@@ -647,6 +699,7 @@ class _$ContinueToNextStepImpl implements _ContinueToNextStep {
     TResult Function()? loadFlow,
     TResult Function(String stepId, String optionId)? selectOption,
     TResult Function()? continueToNextStep,
+    TResult Function()? goBack,
     required TResult orElse(),
   }) {
     if (continueToNextStep != null) {
@@ -661,6 +714,7 @@ class _$ContinueToNextStepImpl implements _ContinueToNextStep {
     required TResult Function(_LoadFlow value) loadFlow,
     required TResult Function(_SelectOption value) selectOption,
     required TResult Function(_ContinueToNextStep value) continueToNextStep,
+    required TResult Function(_GoBack value) goBack,
   }) {
     return continueToNextStep(this);
   }
@@ -671,6 +725,7 @@ class _$ContinueToNextStepImpl implements _ContinueToNextStep {
     TResult? Function(_LoadFlow value)? loadFlow,
     TResult? Function(_SelectOption value)? selectOption,
     TResult? Function(_ContinueToNextStep value)? continueToNextStep,
+    TResult? Function(_GoBack value)? goBack,
   }) {
     return continueToNextStep?.call(this);
   }
@@ -681,6 +736,7 @@ class _$ContinueToNextStepImpl implements _ContinueToNextStep {
     TResult Function(_LoadFlow value)? loadFlow,
     TResult Function(_SelectOption value)? selectOption,
     TResult Function(_ContinueToNextStep value)? continueToNextStep,
+    TResult Function(_GoBack value)? goBack,
     required TResult orElse(),
   }) {
     if (continueToNextStep != null) {
@@ -692,4 +748,118 @@ class _$ContinueToNextStepImpl implements _ContinueToNextStep {
 
 abstract class _ContinueToNextStep implements OnboardingAction {
   const factory _ContinueToNextStep() = _$ContinueToNextStepImpl;
+}
+
+/// @nodoc
+abstract class _$$GoBackImplCopyWith<$Res> {
+  factory _$$GoBackImplCopyWith(
+          _$GoBackImpl value, $Res Function(_$GoBackImpl) then) =
+      __$$GoBackImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$GoBackImplCopyWithImpl<$Res>
+    extends _$OnboardingActionCopyWithImpl<$Res, _$GoBackImpl>
+    implements _$$GoBackImplCopyWith<$Res> {
+  __$$GoBackImplCopyWithImpl(
+      _$GoBackImpl _value, $Res Function(_$GoBackImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$GoBackImpl implements _GoBack {
+  const _$GoBackImpl();
+
+  @override
+  String toString() {
+    return 'OnboardingAction.goBack()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$GoBackImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loadFlow,
+    required TResult Function(String stepId, String optionId) selectOption,
+    required TResult Function() continueToNextStep,
+    required TResult Function() goBack,
+  }) {
+    return goBack();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loadFlow,
+    TResult? Function(String stepId, String optionId)? selectOption,
+    TResult? Function()? continueToNextStep,
+    TResult? Function()? goBack,
+  }) {
+    return goBack?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loadFlow,
+    TResult Function(String stepId, String optionId)? selectOption,
+    TResult Function()? continueToNextStep,
+    TResult Function()? goBack,
+    required TResult orElse(),
+  }) {
+    if (goBack != null) {
+      return goBack();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_LoadFlow value) loadFlow,
+    required TResult Function(_SelectOption value) selectOption,
+    required TResult Function(_ContinueToNextStep value) continueToNextStep,
+    required TResult Function(_GoBack value) goBack,
+  }) {
+    return goBack(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_LoadFlow value)? loadFlow,
+    TResult? Function(_SelectOption value)? selectOption,
+    TResult? Function(_ContinueToNextStep value)? continueToNextStep,
+    TResult? Function(_GoBack value)? goBack,
+  }) {
+    return goBack?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoadFlow value)? loadFlow,
+    TResult Function(_SelectOption value)? selectOption,
+    TResult Function(_ContinueToNextStep value)? continueToNextStep,
+    TResult Function(_GoBack value)? goBack,
+    required TResult orElse(),
+  }) {
+    if (goBack != null) {
+      return goBack(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GoBack implements OnboardingAction {
+  const factory _GoBack() = _$GoBackImpl;
 }

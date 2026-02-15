@@ -6,7 +6,6 @@ import 'base_state_notifier.dart';
 
 part 'onboarding_provider.freezed.dart';
 
-// The main provider definition
 final onboardingProvider =
     StateNotifierProvider<OnboardingNotifier, OnboardingState>((ref) {
   final repository = ref.watch(onboardingRepositoryProvider);
@@ -19,7 +18,8 @@ class OnboardingState with _$OnboardingState {
     @Default(false) bool isLoading,
     OnboardingFlow? flow,
     OnboardingStep? currentStep,
-    @Default({}) Map<String, String> answers, // stepId -> optionId
+    @Default({}) Map<String, String> answers,
+    @Default([]) List<OnboardingStep> history,
     String? error,
   }) = _OnboardingState;
 }
@@ -30,6 +30,7 @@ class OnboardingAction with _$OnboardingAction {
   const factory OnboardingAction.selectOption(String stepId, String optionId) =
       _SelectOption;
   const factory OnboardingAction.continueToNextStep() = _ContinueToNextStep;
+  const factory OnboardingAction.goBack() = _GoBack;
 }
 
 class OnboardingNotifier
@@ -45,6 +46,7 @@ class OnboardingNotifier
       loadFlow: _loadFlow,
       selectOption: _selectOption,
       continueToNextStep: _continueToNextStep,
+      goBack: _goBack,
     );
   }
 
@@ -52,7 +54,7 @@ class OnboardingNotifier
     state = state.copyWith(isLoading: true);
     try {
       final response = await _repository.getOnboardingFlow();
-      // Start with the first step (stepIndex 7 in this truncated json)
+
       final firstStep =
           response.onboardingFlow.steps.firstWhere((s) => s.stepIndex == 7);
 
@@ -67,17 +69,10 @@ class OnboardingNotifier
   }
 
   void _selectOption(String stepId, String optionId) {
-    // 1. Save answer
     final newAnswers = Map<String, String>.from(state.answers);
     newAnswers[stepId] = optionId;
 
-    // Update state first
     state = state.copyWith(answers: newAnswers);
-
-    // 2. Calculate next step
-    if (state.currentStep != null) {
-      _goToNextStep(state.currentStep!);
-    }
   }
 
   void _continueToNextStep() {
@@ -86,9 +81,17 @@ class OnboardingNotifier
     }
   }
 
+  void _goBack() {
+    if (state.history.isNotEmpty) {
+      final previousStep = state.history.last;
+      final newHistory = List<OnboardingStep>.from(state.history)..removeLast();
+      state = state.copyWith(currentStep: previousStep, history: newHistory);
+    }
+  }
+
   void _goToNextStep(OnboardingStep currentStep) {
     if (currentStep.nextSteps == null || currentStep.nextSteps!.isEmpty) {
-      return; // End of flow or no explicit next steps
+      return;
     }
 
     String? nextStepId;
@@ -117,10 +120,12 @@ class OnboardingNotifier
     if (nextStepId != null) {
       final nextStep = state.flow?.steps.firstWhere(
         (s) => s.id == nextStepId,
-        orElse: () => currentStep, // Fallback
+        orElse: () => currentStep,
       );
       if (nextStep != null) {
-        state = state.copyWith(currentStep: nextStep);
+        final newHistory = List<OnboardingStep>.from(state.history)
+          ..add(currentStep);
+        state = state.copyWith(currentStep: nextStep, history: newHistory);
       }
     }
   }

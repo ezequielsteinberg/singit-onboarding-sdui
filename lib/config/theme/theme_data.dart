@@ -12,7 +12,6 @@ class AppTheme {
       extensions: <ThemeExtension<dynamic>>[
         AppColorsExtension.light,
       ],
-      // Add other global theme configurations here if needed
       appBarTheme: AppBarTheme(
         backgroundColor: lightColorScheme.surface,
         foregroundColor: lightColorScheme.onSurface,

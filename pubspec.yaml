@@ -33,7 +33,6 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/animations/
     - assets/translations/
     - assets/env/
     - assets/json/

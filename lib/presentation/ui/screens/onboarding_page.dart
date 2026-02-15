@@ -14,7 +14,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
   @override
   void initState() {
     super.initState();
-    // Load the flow when the screen mounts
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref
           .read(onboardingProvider.notifier)
@@ -58,6 +58,17 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
         ref
             .read(onboardingProvider.notifier)
             .reducer(action: const OnboardingAction.continueToNextStep());
+      },
+      onBack: () {
+        if (state.history.isNotEmpty) {
+          ref
+              .read(onboardingProvider.notifier)
+              .reducer(action: const OnboardingAction.goBack());
+        } else {
+          if (Navigator.of(context).canPop()) {
+            Navigator.of(context).pop();
+          }
+        }
       },
     );
   }
